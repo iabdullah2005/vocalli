@@ -1,9 +1,42 @@
 import 'package:flutter/material.dart';
 import 'main_navigation_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'email_auth_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
+  Future<void> signInWithGoogle(BuildContext context) async {
+    try {
+      final GoogleSignInAccount? googleUser =
+      await GoogleSignIn().signIn();
 
+      if (googleUser == null) return;
+
+      final GoogleSignInAuthentication googleAuth =
+      await googleUser.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      await FirebaseAuth.instance.signInWithCredential(
+        credential,
+      );
+
+      if (context.mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (_) => const MainNavigationScreen(),
+          ),
+        );
+      }
+    } catch (e) {
+      debugPrint("Google Sign-In Error: $e");
+    }
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -77,19 +110,30 @@ class LoginScreen extends StatelessWidget {
                   Color(0xFF4285F4),
                   Color(0xFF34A853),
                 ],
+                onPressed: () async {
+                  await signInWithGoogle(context);
+                },
               ),
 
               const SizedBox(height: 18),
 
-              // Facebook Button
+              // login with email Button
               socialButton(
                 context: context,
-                title: "Continue with Facebook",
-                icon: Icons.facebook,
+                title: "Continue with Email",
+                icon: Icons.email_outlined,
                 colors: const [
-                  Color(0xFF1877F2),
-                  Color(0xFF0A58CA),
+                  Color(0xFF6366F1),
+                  Color(0xFF8B5CF6),
                 ],
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const EmailAuthScreen(),
+                    ),
+                  );
+                },
               ),
 
               const SizedBox(height: 25),
@@ -129,6 +173,7 @@ class LoginScreen extends StatelessWidget {
     required String title,
     required IconData icon,
     required List<Color> colors,
+    required VoidCallback onPressed,
   }) {
 
     return SizedBox(
@@ -146,16 +191,7 @@ class LoginScreen extends StatelessWidget {
           ),
         ),
 
-        onPressed: () {
-
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-              const MainNavigationScreen(),
-            ),
-          );
-        },
+        onPressed: onPressed,
 
         child: Ink(
           decoration: BoxDecoration(

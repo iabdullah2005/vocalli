@@ -5,11 +5,21 @@ import 'screens/splash_screen.dart';
 import 'theme/dark_theme.dart';
 import 'theme/light_theme.dart';
 
+import 'package:firebase_core/firebase_core.dart';
+
+
+
+
+
 void main() async {
+  print("Firebase Connected Successfully");
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp();
 
   runApp(const VocaliApp());
 }
-
 class VocaliApp extends StatefulWidget {
   const VocaliApp({super.key});
 

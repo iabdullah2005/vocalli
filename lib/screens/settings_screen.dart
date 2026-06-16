@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../main.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -179,6 +181,10 @@ class SettingsScreen extends StatelessWidget {
                   context: context,
                   icon: Icons.logout,
                   title: "Logout",
+                  onTap: () async {
+                    await GoogleSignIn().signOut();
+                    await FirebaseAuth.instance.signOut();
+                  },
                 ),
               ],
             ),
@@ -192,51 +198,53 @@ class SettingsScreen extends StatelessWidget {
     required BuildContext context,
     required IconData icon,
     required String title,
+    VoidCallback? onTap,
   }) {
 
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.all(20),
+    return InkWell(
+      borderRadius: BorderRadius.circular(22),
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 16),
+        padding: const EdgeInsets.all(20),
 
-      decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(22),
-      ),
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardColor,
+          borderRadius: BorderRadius.circular(22),
+        ),
 
-      child: Row(
-        children: [
-
-          Icon(
-            icon,
-            color: Colors.blueAccent,
-          ),
-
-          const SizedBox(width: 18),
-
-          Text(
-            title,
-            style: TextStyle(
-              color: Theme.of(context)
-                  .textTheme
-                  .bodyLarge
-                  ?.color,
-
-              fontSize: 18,
+        child: Row(
+          children: [
+            Icon(
+              icon,
+              color: Colors.blueAccent,
             ),
-          ),
 
-          const Spacer(),
+            const SizedBox(width: 18),
 
-          Icon(
-            Icons.arrow_forward_ios,
-            color: Theme.of(context).brightness ==
-                Brightness.dark
-                ? Colors.white54
-                : Colors.black45,
+            Text(
+              title,
+              style: TextStyle(
+                color: Theme.of(context)
+                    .textTheme
+                    .bodyLarge
+                    ?.color,
+                fontSize: 18,
+              ),
+            ),
 
-            size: 18,
-          ),
-        ],
+            const Spacer(),
+
+            Icon(
+              Icons.arrow_forward_ios,
+              color: Theme.of(context).brightness ==
+                  Brightness.dark
+                  ? Colors.white54
+                  : Colors.black45,
+              size: 18,
+            ),
+          ],
+        ),
       ),
     );
   }

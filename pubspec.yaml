@@ -13,6 +13,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  firebase_core: ^3.1.0
+  firebase_auth: ^5.1.0
+  google_sign_in: ^6.2.1
+
 
   cupertino_icons: ^1.0.8
 
@@ -36,3 +40,4 @@ flutter:
 
         - asset: assets/fonts/Poppins/Poppins-Bold.ttf
           weight: 700
+

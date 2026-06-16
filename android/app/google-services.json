@@ -12,7 +12,20 @@
           "package_name": "com.example.vocalli"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "847260743298-2oktrth7v81il63ubj18f5dl5f8lg43o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.vocalli",
+            "certificate_hash": "8e651e6747e74fd7b4963c9b2af6c0a3622518ad"
+          }
+        },
+        {
+          "client_id": "847260743298-jisjjk37im0jjo5s7klak76u89lfvi84.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyC_2yHEATju4PAkEMa4XNzZLX0GltN7-3E"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "847260743298-jisjjk37im0jjo5s7klak76u89lfvi84.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
